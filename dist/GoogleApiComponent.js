@@ -106,10 +106,8 @@
     );
   };
 
-  var wrapper = exports.wrapper = function wrapper(options) {
+  var wrapper = exports.wrapper = function wrapper(input) {
     return function (WrappedComponent) {
-      var createCache = options.createCache || defaultCreateCache;
-
       var Wrapper = function (_React$Component) {
         _inherits(Wrapper, _React$Component);
 
@@ -117,6 +115,9 @@
           _classCallCheck(this, Wrapper);
 
           var _this = _possibleConstructorReturn(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).call(this, props, context));
+
+          var options = typeof input === 'function' ? input(props) : input;
+          var createCache = options.createCache || defaultCreateCache;
 
           _this.scriptCache = createCache(options);
           _this.scriptCache.google.onLoad(_this.onLoad.bind(_this));
@@ -163,63 +164,7 @@
         return Wrapper;
       }(_react2.default.Component);
 
-<<<<<<< HEAD
-    var wrapper = exports.wrapper = function wrapper(input) {
-        return function (WrappedComponent) {
-            var Wrapper = function (_React$Component) {
-                _inherits(Wrapper, _React$Component);
-
-                function Wrapper(props, context) {
-                    _classCallCheck(this, Wrapper);
-
-                    var _this = _possibleConstructorReturn(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).call(this, props, context));
-
-                    var options = typeof input === 'function' ? input(props) : input;
-                    var createCache = options.createCache || defaultCreateCache;
-
-                    _this.scriptCache = createCache(options);
-                    _this.scriptCache.google.onLoad(_this.onLoad.bind(_this));
-
-                    _this.state = {
-                        loaded: false,
-                        map: null,
-                        google: null
-                    };
-                    return _this;
-                }
-
-                _createClass(Wrapper, [{
-                    key: 'onLoad',
-                    value: function onLoad(err, tag) {
-                        this._gapi = window.google;
-
-                        this.setState({ loaded: true, google: this._gapi });
-                    }
-                }, {
-                    key: 'render',
-                    value: function render() {
-                        var props = Object.assign({}, this.props, {
-                            loaded: this.state.loaded,
-                            google: window.google
-                        });
-
-                        return _react2.default.createElement(
-                            'div',
-                            null,
-                            _react2.default.createElement(WrappedComponent, props),
-                            _react2.default.createElement('div', { ref: 'map' })
-                        );
-                    }
-                }]);
-
-                return Wrapper;
-            }(_react2.default.Component);
-
-            return Wrapper;
-        };
-=======
       return Wrapper;
->>>>>>> origin/feature/accept-functions-as-input
     };
   };
 
