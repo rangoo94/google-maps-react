@@ -96,10 +96,8 @@
         });
     };
 
-    var wrapper = exports.wrapper = function wrapper(options) {
+    var wrapper = exports.wrapper = function wrapper(input) {
         return function (WrappedComponent) {
-            var createCache = options.createCache || defaultCreateCache;
-
             var Wrapper = function (_React$Component) {
                 _inherits(Wrapper, _React$Component);
 
@@ -107,6 +105,9 @@
                     _classCallCheck(this, Wrapper);
 
                     var _this = _possibleConstructorReturn(this, (Wrapper.__proto__ || Object.getPrototypeOf(Wrapper)).call(this, props, context));
+
+                    var options = typeof input === 'function' ? input(props) : input;
+                    var createCache = options.createCache || defaultCreateCache;
 
                     _this.scriptCache = createCache(options);
                     _this.scriptCache.google.onLoad(_this.onLoad.bind(_this));
